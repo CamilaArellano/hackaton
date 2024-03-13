@@ -1,2 +1,6 @@
-print("Hola mundo")
-print()
+#$ Comandos básicos
+
+
+
+
+
