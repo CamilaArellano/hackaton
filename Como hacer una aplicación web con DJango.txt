@@ -1,0 +1,28 @@
+1. Necesitas hacer un entorno virtual
+   - Por lo que necesitas crear una carpeta o directorio para ello
+   - En la terminal por medio de cd (para dirigirte a una carpeta) tienes que estar dentro de donde quieres crear el entorno virtual.
+   - pip install virtualenv # Instala el entorno virtual
+   - virtualenv venv # Crea un entorno llamado venv en la carpeta
+   - .\venv\Scripts\activate # Para activar el entorno virtual
+2. En Visual Studio Code
+   - Select interpreter python de venv
+   - Crear una cmd en VS
+3. Instalar DJango (VS)
+   - pip install django # Instala DJango en el entorno virtual
+   - django-admin --version # Checa la versión
+   - python -m django --version # Checa la versión
+
+Crear un proyecto
+   - django-admin startproject name . # Se crea el proyecto con los módulos dentro de la misma
+   - python manage.py runserver # Corre el programa para visualizar la página
+
+Crear una aplicación
+   - python manage.py startapp name # Se crea la aplicación-carpeta
+
+Hacer migraciones a la base de datos
+   - python manage.py makemigrations
+   - python manage.py migrate
+
+Configurar admin
+   - python manage.py createsuperuser
+   - 
