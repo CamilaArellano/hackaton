@@ -19,7 +19,7 @@ def data(file_path):
     return data
 
 # Print the data
-file_path='C:\\Users\\NOM\\Downloads\\Hackathon-Information.xlsx'
+file_path='files\Hackathon-Information.xlsx'
 data_generados=data(file_path)
 for row in data_generados:
     print(row)
