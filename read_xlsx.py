@@ -21,5 +21,7 @@ def fetch_data(file_path):
 # Print the data
 file_path = 'files/Hackathon-Information.xlsx'
 generated_data = fetch_data(file_path)
-for row in generated_data:
-    print(row)
+
+def get_row(generated_data, row):
+    seed = generated_data.pop(row)
+    return seed
