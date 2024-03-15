@@ -36,7 +36,7 @@ def find_names(name, registration, levenshtein_threshold, phonetic_threshold):
     return similar_names
 
 original_name = "Amanda"
-name_registration = read_name_variant('files\name_variant_hackathon.txt', data=[])
+name_registration = read_name_variant('files/name_variant_hackathon.txt', data=[])
 similar_names = find_names(original_name, name_registration, 1, 90)
 
 print(f"Nombres similares a {original_name}: {similar_names}")

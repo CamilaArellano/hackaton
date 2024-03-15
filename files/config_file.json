@@ -1,0 +1,59 @@
+{
+    "records_per_arc": 1000,
+    "cases": [
+        {
+            "case_id" : "SIMILAR",
+            "distribution": 0.4,
+            "sub_cases": [
+                {
+                    "case_id" : "SAME",
+                    "distribution": 0.8
+                },
+                {
+                    "case_id" : "TYPO",
+                    "distribution": 0.4
+                }
+            ]
+        },
+        {
+            "case_id" : "FAMILY",
+            "distribution": 0.2,
+            "sub_cases": [
+                {
+                    "case_id" : "PARENT_CHILD",
+                    "distribution": 0.49
+                },
+                {
+                    "case_id" : "TWINS",
+                    "distribution": 0.02
+                },
+                {
+                    "case_id" : "SIBLINGS",
+                    "distribution": 0.49
+                }
+            ]
+        },
+        {
+            "case_id" : "LOW_SIMILARITY",
+            "distribution": 0.4,
+            "sub_cases": [
+                {
+                    "case_id" : "NOMATCH_FN_DOB",
+                    "distribution": 0.4
+                },
+                {
+                    "case_id" : "NOMATCH_LN_DOB",
+                    "distribution": 0.4
+                },
+                {
+                    "case_id" : "NOMATCH_SSN",
+                    "distribution": 0.1
+                },
+                {
+                    "case_id" : "NOMATCH_DOB_ZIP",
+                    "distribution": 0.1
+                }
+            ]
+        }
+    ]
+}
