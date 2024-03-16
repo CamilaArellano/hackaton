@@ -22,7 +22,7 @@ def data(file_path):
     return data
 
 # Print the data
-file_path='files/Hackathon-Information.xlsx'
+file_path='Hackathon-Information.xlsx'
 data_generados=data(file_path)
 
 def read_column(file_path, column_number=1):

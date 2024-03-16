@@ -9,7 +9,7 @@ from fuzzywuzzy import fuzz
 from uszipcode import SearchEngine
 from faker import Faker
 
-from read_xlsx import read_column
+from seedsData import getSeedsData
 import csv
 import pandas as pd
 
@@ -126,7 +126,7 @@ print("Nombre generado: ", name)
 
 # Generar un apellido
 original_last_name = "Adams"
-last_names = read_column(file_last_name, 1)
+last_names = getSeedsData.read_column(file_last_name, 1)
 similar_last_names = find_similar_names(original_last_name, last_names, 70, 80)
 
 # Excluir el apellido original de la lista similar_last_names
