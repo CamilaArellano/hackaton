@@ -83,18 +83,43 @@ def modify_same_address1(seed, columns):
         if header[column_index] == 'Address-1 City':
             seed[column_index] = location[1]
         if header[column_index] == 'Address-1 State':
-            seed[column_index]=location[0]
+            seed[column_index] = location[0]
         if header[column_index] == 'Address-1 Zip':
             seed[column_index] = zip_code[0]
         if header[column_index] == 'Address-1 Zip4':
             seed[column_index] = address[2]
     print(seed)
+
+# This method only modifies the Address-1 fields.
+
+def modify_same_address2(seed, columns):
+    address = generate_fake_address()
+    location = generate_random_state_city()
+    zip_code = generate_zip_code()
+    for column_index in columns:
+        if header[column_index] == 'Address-2 Line 1':
+            seed[column_index] = address[0]
+        if header[column_index] == 'Address-2 Line 2':
+            seed[column_index] = address[1]
+        if header[column_index] == 'Address-2 City':
+            seed[column_index] = location[1]
+        if header[column_index] == 'Address-2 State':
+            seed[column_index] = location[0]
+        if header[column_index] == 'Address-2 Zip':
+            seed[column_index] = zip_code[0]
+        if header[column_index] == 'Address-2 Zip4':
+            seed[column_index] = address[2]
+    print(seed)
+
+# This method only modifies the fields related to method 2.
+
             
 
 
 columnas = subcase_same_columns(header)
 print("Columnas: ", subcase_same_columns(header))
 modify_same_address1(seed, columnas )
+modify_same_address2(seed, columnas )
 
 
 
