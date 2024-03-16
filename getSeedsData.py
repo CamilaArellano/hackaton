@@ -35,4 +35,4 @@ def get_row(generated_data, row):
     print(seed)
     return seed
 
-print(tabulate(data_generados))
+#print(tabulate(data_generados))
