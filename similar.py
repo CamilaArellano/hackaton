@@ -1,5 +1,5 @@
 from getSeedsData import data, get_row
-from generator_methods2 import read_name_variants, find_similar_names, generate_name, generate_fake_address
+from generator_methods2 import read_name_variants, find_similar_names, generate_name, generate_fake_address, generate_random_state_city, generate_zip_code
 import getJsonData as js
 
 ruta='files/config_file.json'
@@ -71,18 +71,30 @@ def subcase_same_columns(header):
             columns.append(index)
     return columns
 
-def modify_same(seed, columns):
+def modify_same_address1(seed, columns):
     address = generate_fake_address()
+    location = generate_random_state_city()
+    zip_code = generate_zip_code()
     for column_index in columns:
         if header[column_index] == 'Address-1 Line 1':
             seed[column_index] = address[0]
+        if header[column_index] == 'Address-1 Line 2':
+            seed[column_index] = address[1]
+        if header[column_index] == 'Address-1 City':
+            seed[column_index] = location[1]
+        if header[column_index] == 'Address-1 State':
+            seed[column_index]=location[0]
+        if header[column_index] == 'Address-1 Zip':
+            seed[column_index] = zip_code[0]
+        if header[column_index] == 'Address-1 Zip4':
+            seed[column_index] = address[2]
     print(seed)
             
 
 
 columnas = subcase_same_columns(header)
 print("Columnas: ", subcase_same_columns(header))
-modify_same(seed, columnas )
+modify_same_address1(seed, columnas )
 
 
 

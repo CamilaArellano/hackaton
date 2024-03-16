@@ -176,7 +176,7 @@ def generate_fake_address():
     if random.random() < 0.5:  # Adjust probability as needed
         address_line_2 = f"Apt {random.randint(1, 20)}{random.choice(['', 'A', 'B', 'C'])}"  # Example: Apt 5B
     else:
-        address_line_2 = ""
+        address_line_2 = None
     
     zip4 = f"{random.randint(1000, 9999)}"
     return address_line_1, address_line_2, zip4
