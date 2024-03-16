@@ -1,8 +1,11 @@
 import re
 import random
 import spacy
+import phonenumbers
+from phonenumbers import geocoder, PhoneNumberFormat
 from fuzzywuzzy import fuzz
 from uszipcode import SearchEngine
+import requests
 from faker import Faker
 from read_xlsx import read_column
 
@@ -27,6 +30,9 @@ def read_name_variants(file):
 
 def normalize_name(name):
     return re.sub(r'[^a-zA-Z ]', '', name.lower())
+
+
+    
 
 def find_similar_names(name, registration, levenshtein_threshold, phonetic_threshold):
     similar_names = []
@@ -107,6 +113,8 @@ def mutate_last_name(original_last_name):
     
     return mutated_last_name
 
+
+#!Ejemplos de uso
 # Generar un nombre
 original_name = "Susan"
 name_variants = read_name_variants('files/name_variant_hackathon.txt')
@@ -144,3 +152,4 @@ print("SSN generado:", ssn)
 # Generar una fecha de nacimiento
 dob = generate_DOB()
 print("Fecha de nacimiento generada:", dob)
+

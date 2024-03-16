@@ -1,5 +1,5 @@
 {
-    "records_per_arc": 1000,
+    "records_per_arc": 100,
     "cases": [
         {
             "case_id" : "SIMILAR",

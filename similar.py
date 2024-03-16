@@ -1,51 +1,104 @@
-from read_xlsx import fetch_data, get_row
+from getSeedsData import data, get_row
+from generator_methods import read_name_variants, find_similar_names, generate_name
+import getJsonData as js
+
+ruta='files/config_file.json'
+
+similar = js.listSimilar
+per_arcs = js.PerArc
+
+similar_txt = similar[0]
+same_txt = similar[2]
+typo_txt = similar[4]
+
+percentageSimilar = similar[1]
+percentageSame = similar[3]
+percentageTypo = similar[5]
+
 
 file_path = 'files/Hackathon-Information.xlsx'
-generated_data = fetch_data(file_path)
+generated_data = data(file_path)
 seed = get_row(generated_data, 2)
 header = get_row(generated_data, 0)
 
-def structure(header):
-    # Iterar sobre los elementos del encabezado y asignar nombres dinámicos a las variables
+probability_same= per_arcs*percentageSimilar*percentageSame
+print(probability_same)
+
+
+# for subcases_same in probability_same:
+#     subcase_same(seed)
+
+def subcase_same(header):
+    columns = []
     for index, attribute in enumerate(header):
-        # Construir dinámicamente el nombre de la variable
-        attribute_name = f"attribute_name_{index + 1}"
-        # Asignar el valor del atributo a la variable con el nombre construido
-        globals()[attribute_name] = attribute
-        # Imprimir el nombre y el valor de la variable
-        print(f"{attribute_name}: {attribute}")
+        if attribute == 'FirstName':
+            columns.append(index)
+        if attribute == 'Alias-1':
+            columns.append(index)
+        if attribute == 'Alias-2':
+            columns.append(index)
+        if attribute == 'Alias-3':
+            columns.append(index)
+        if attribute == 'Address-1 Line 1':
+            columns.append(index)
+        if attribute == 'Address-1 Line 2':
+            columns.append(index)
+        if attribute == 'Address-1 City':
+            columns.append(index)
+        if attribute == 'Address-1 State':
+            columns.append(index)
+        if attribute == 'Address-1 Zip':
+            columns.append(index)
+        if attribute == 'Address-1 Zip4':
+            columns.append(index)
+        if attribute == 'Address-2 Line 1':
+            columns.append(index)
+        if attribute == 'Address-2 Line 2':
+            columns.append(index)
+        if attribute == 'Address-2 City':
+            columns.append(index)
+        if attribute == 'Address-2 State':
+            columns.append(index)
+        if attribute == 'Address-2 Zip':
+            columns.append(index)
+        if attribute == 'Address-2 Zip4':
+            columns.append(index)
+        if attribute == 'Phone-1 Area Code':
+            columns.append(index)
+        if attribute == 'Phone-1 Base Number':
+            columns.append(index)
+        if attribute == 'Phone-2 Area Code':
+            columns.append(index)
+        if attribute == 'Phone-2 Base Number':
+            columns.append(index)
+    return columns
 
-def generate_similar_record(seed):
-    # Copiar la semilla para modificarla
-    similar_record = seed.copy()
-    
-    # Definir los atributos que podrían cambiar
-    attributes_to_change = ["Dirección", "Teléfono", "Alias"]
-    
-    # Modificar algunos atributos aleatorios
-    for attribute in attributes_to_change:
-        # Aquí podrías implementar la lógica para generar valores similares
-        # Por ejemplo, podrías cambiar la dirección por una dirección cercana o el teléfono por un número similar
-        # En este caso, simplemente lo dejaremos vacío
-        similar_record[attribute] = ""
-    
-    return similar_record
+def modify_same(seed, columns):
+    for column_index in columns:
+        if header[column_index] == 'FirstName':
+            # Modificar el valor de 'FirstName'
+            name_variants = read_name_variants('files/name_variant_hackathon.txt')
+            similar_names = find_similar_names(seed[column_index], name_variants, 90, 90)
+            if seed[column_index] in similar_names:
+                similar_names.remove(seed[column_index])
+            name = generate_name(similar_names)
+            print("Nombres similares: ", similar_names)
+            print("Nombre generado: ", name)
 
-def same(seed):
-    # Generar un registro similar para cada atributo de la semilla
-    for attribute in seed:
-        similar_record = generate_similar_record(seed)
-        print(similar_record)
-
-
-def same(seed):
-    for attribute in seed:
-        print(attribute)
+def modify_typo(seed, columns:)
+    for column_index in columns:
+        if header[column_index] == 'FirstName':
+            # Modificar el valor de 'FirstName'
+            name_variants = read_name_variants('files/name_variant_hackathon.txt')
+            similar_names = find_similar_names(seed[column_index], name_variants, 90, 90)
+            if seed[column_index] in similar_names:
+                similar_names.remove(seed[column_index])
+            name = generate_name(similar_names)
 
 
-# Llamar a las funciones
-same(seed)
-structure(header)
+columnas = subcase_same(header)
+print("Columnas: ", subcase_same(header))
+modify_same(seed, columnas )
 
 
 
