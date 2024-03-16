@@ -24,4 +24,5 @@ generated_data = fetch_data(file_path)
 
 def get_row(generated_data, row):
     seed = generated_data.pop(row)
+    print(seed)
     return seed

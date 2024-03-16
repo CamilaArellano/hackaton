@@ -1,8 +1,10 @@
+import Levenshtein # Se instala
 import re
-import random
-from fuzzywuzzy import fuzz
-from uszipcode import SearchEngine
-from faker import Faker
+import random  # Se agrega la importación de random
+from fuzzywuzzy import fuzz # Se instala
+from uszipcode import SearchEngine # Se instala
+from faker import Faker # Se instala
+
 
 def read_name_variants(file):
     variants = []
@@ -25,7 +27,13 @@ def find_similar_names(name, registration, levenshtein_threshold, phonetic_thres
             similar_names.append(name_registered)
     return similar_names
 
-def generate_zip_code(state=None):
+# Ejemplo de uso
+# original_name = "Amanda"
+# name_registration = read_name_variant('files/name_variant_hackathon.txt', data=[])
+# similar_names = find_names(original_name, name_registration, 1, 90)
+# print(f"Nombres similares a {original_name}: {similar_names}")
+
+def generate_zip_code(state):
     search = SearchEngine()
     if state:
         zipcodes = search.by_state(state)
@@ -80,17 +88,33 @@ similar_names = find_similar_names(original_name, name_variants, 90, 90)
 print(f"Nombres similares a {original_name}: {similar_names}")
 
 # Ejemplo de uso
-state = "NY" # Estado de Nueva York
-zip_code, state, city = generate_zip_code(state)
-if zip_code:
-    print(f"Código postal generado para {city}, {state}: {zip_code}")
-    address = generate_fake_address(zip_code)
-    if address:
-        address_line_1, address_line_2, city, state, zip_code, zip4 = address
-        print("Dirección falsa generada:")
-        print("Address-1 Line 1:", address_line_1)
-        print("Address-1 Line 2:", address_line_2)
-        print("Address-1 City:", city)
-        print("Address-1 State:", state)
-        print("Address-1 Zip:", zip_code)
-        print("Address-1 Zip4:", zip4)
+# state = "NY" # Estado de Nueva York
+# random_zip_code = generate_zip_code(state)
+# if random_zip_code:
+#     print(f"Código postal generado para {state}: {random_zip_code}")
+
+
+#* Sylvana
+
+# def generate_phone():
+#     fake = Faker()
+#     # Generar código de área de Estados Unidos (3 dígitos)
+#     area_code = fake.random_int(min=200, max=999)  # Rango típico de códigos de área de Estados Unidos
+#     # Generar número base (7 dígitos)
+#     base_number = fake.random_int(min=1000000, max=9999999)
+
+#     phone_number = f"({area_code}) {base_number:03}"
+#     print("Número de teléfono generado:", phone_number)
+
+#     # Obtener información de ubicación
+#     location_info = {
+#         'country': 'United States',
+#         'state': fake.state(),
+#         'city': fake.city(),
+#         'zip_code': fake.zipcode(),  # Código postal dentro de Estados Unidos
+#     }
+#     print("Ubicación correspondiente:", location_info)
+#     return location_info, phone_number
+
+# # Generar ubicación y número de teléfono
+# location, phone = generate_phone()
