@@ -6,36 +6,24 @@ from uszipcode import SearchEngine # Se instala
 from faker import Faker # Se instala
 
 
-def read_name_variant(file, data=[]):
-    with open(file, 'r') as file:
-        lines = file.readlines()
-        for line in lines:
-            # Divide cada línea en palabras
+def read_name_variants(file):
+    variants = []
+    with open(file, 'r') as f:
+        for line in f:
             words = line.split()
-            word_1 = words[0]
-            word_2 = words[1]
-            data.append(word_1)
-            data.append(word_2)
-    data.sort()
-    data_repetitions = list(set(data))
-    return data_repetitions
+            variants.extend(words)
+    return sorted(set(variants))
 
 def normalize_name(name):
-    # Convertir a minúsculas y eliminar caracteres no alfabéticos
-    standard_name = name.lower()
-    standard_name = re.sub(r'[^a-zA-Z ]', '', standard_name)
-    return standard_name
+    return re.sub(r'[^a-zA-Z ]', '', name.lower())
 
-def find_names(name, registration, levenshtein_threshold, phonetic_threshold):
+def find_similar_names(name, registration, levenshtein_threshold, phonetic_threshold):
     similar_names = []
     standard_name = normalize_name(name)
     for name_registered in registration:
-        # Similaridad fonética
         phonetic_similarity = fuzz.partial_ratio(standard_name, normalize_name(name_registered))
-        # Distancia de Levenshtein
-        levenshtein_distance = Levenshtein.distance(standard_name, normalize_name(name_registered))
-        # Compara si superan el umbral
-        if phonetic_similarity >= phonetic_threshold or levenshtein_distance <= levenshtein_threshold:
+        levenshtein_distance = fuzz.ratio(standard_name, normalize_name(name_registered))
+        if phonetic_similarity >= phonetic_threshold or levenshtein_distance >= levenshtein_threshold:
             similar_names.append(name_registered)
     return similar_names
 
@@ -47,14 +35,37 @@ def find_names(name, registration, levenshtein_threshold, phonetic_threshold):
 
 def generate_zip_code(state):
     search = SearchEngine()
-    zipcodes = search.by_state(state)
+    if state:
+        zipcodes = search.by_state(state)
+    else:
+        # Get all zip codes
+        zipcodes = search.zipcode_to_city()
     if zipcodes:
-        # Selecciona un código postal aleatorio del estado
         random_zip = random.choice(zipcodes)
-        return random_zip.zipcode
+        return random_zip.zipcode, random_zip.state, random_zip.city
     else:
         print(f"No se encontraron códigos postales para el estado {state}.")
+        return None, None, None
+
+def generate_fake_address(zip_code):
+    search = SearchEngine()
+    zipcode_info = search.by_zipcode(zip_code)
+    if zipcode_info:
+        city = zipcode_info.major_city
+        state = zipcode_info.state
+        address_line_1 = f"{random.randint(1000, 9999)} {random.choice(['Main', 'Oak', 'Pine', 'Maple'])} St"
+        address_line_2 = ""
+        zip4 = f"{random.randint(1000, 9999)}"
+        return address_line_1, address_line_2, city, state, zip_code, zip4
+    else:
+        print(f"No se encontró información para el código postal {zip_code}.")
         return None
+
+# Ejemplo de uso
+original_name = "Amanda"
+name_variants = read_name_variants('files/name_variant_hackathon.txt')
+similar_names = find_similar_names(original_name, name_variants, 90, 90)
+print(f"Nombres similares a {original_name}: {similar_names}")
 
 # Ejemplo de uso
 # state = "NY" # Estado de Nueva York
