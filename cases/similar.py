@@ -1,6 +1,6 @@
-from getSeedsData import data, get_row
+from seedsData.getSeedsData import data, get_row
 from generator_methods_copy import read_name_variants, find_similar_names, generate_name, generate_fake_address
-import getJsonData as js
+import Configurations.getJsonData as js
 
 ruta='files/config_file.json'
 

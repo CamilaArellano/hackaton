@@ -93,7 +93,7 @@ class getJsonData():
         return listLowSimilitaryData
 
 
-ruta='files/config_file.json'
+ruta='config_file.json'
 
 obj = getJsonData()
 obj.getJsonData(ruta)
