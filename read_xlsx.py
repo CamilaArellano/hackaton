@@ -1,4 +1,5 @@
 import openpyxl
+import pandas as pd
 
 def fetch_data(file_path):
     excel_workbook = openpyxl.load_workbook(file_path)
@@ -17,6 +18,11 @@ def fetch_data(file_path):
     data.pop(0)  # Remove the first row (assuming it's a header)
     data.pop()   # Remove the last row (assuming it's empty)
     return data
+
+def read_row(file_path, row_number=1):
+    df = pd.read_excel(file_path)
+    selected_row = df.iloc[row_number -1]
+    return selected_row
 
 # Print the data
 file_path = 'files/Hackathon-Information.xlsx'
