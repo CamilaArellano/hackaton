@@ -156,7 +156,7 @@ print("Fecha de nacimiento generada:", dob)
 
 def generate_random_state_city():
     # Cargar el archivo CSV que contiene los códigos de área y la información de las ciudades y estados
-    area_codes_df = pd.read_csv('area_codes.csv')  # Reemplaza 'area_codes.csv' con el nombre real de tu archivo CSV
+    area_codes_df = pd.read_csv('files/area_codes.csv')  # Reemplaza 'area_codes.csv' con el nombre real de tu archivo CSV
 
     # Seleccionar aleatoriamente una entrada del DataFrame
     random_entry = area_codes_df.sample()
