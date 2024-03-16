@@ -1,6 +1,6 @@
-from getSeedsData import data, get_row
-from generator_methods import read_name_variants, find_similar_names, generate_name
-import getJsonData as js
+from seedsData.getSeedsData import data, get_row
+from generator_methods_copy import read_name_variants, find_similar_names, generate_name, generate_fake_address
+import Configurations.getJsonData as js
 
 ruta='files/config_file.json'
 
@@ -31,8 +31,6 @@ print(probability_same)
 def subcase_same_columns(header):
     columns = []
     for index, attribute in enumerate(header):
-        if attribute == 'FirstName':
-            columns.append(index)
         if attribute == 'Alias-1':
             columns.append(index)
         if attribute == 'Alias-2':
@@ -75,15 +73,8 @@ def subcase_same_columns(header):
 
 def modify_same(seed, columns):
     for column_index in columns:
-        if header[column_index] == 'FirstName':
-            # Modificar el valor de 'FirstName'
-            name_variants = read_name_variants('files/name_variant_hackathon.txt')
-            similar_names = find_similar_names(seed[column_index], name_variants, 90, 90)
-            if seed[column_index] in similar_names:
-                similar_names.remove(seed[column_index])
-            name = generate_name(similar_names)
-            print("Nombres similares: ", similar_names)
-            print("Nombre generado: ", name)
+        if header[column_index] == 'Address-1 Line 1':
+            generate_fake_address()
 
 def modify_typo(seed, columns:)
     for column_index in columns:
