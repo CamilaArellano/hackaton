@@ -53,6 +53,26 @@ def generate_fake_address(zip_code):
         print(f"No se encontró información para el código postal {zip_code}.")
         return None
 
+# Función para generar un SSN válido
+def generate_ssn():
+    ssn = fake.ssn().replace('-', '')
+    while not is_valid_ssn(ssn):
+        ssn = fake.ssn().replace('-', '')
+    return ssn
+
+# Función para verificar si un SSN es válido
+def is_valid_ssn(ssn):
+    # Verifica la estructura del SSN
+    if not (len(ssn) == 9 and ssn.isdigit()):
+        return False
+    # Verifica los criterios de validez
+    if (ssn[:3] == '000' or ssn[:3] == '666' or (900 <= int(ssn[:3]) <= 999) or
+        ssn[3:5] == '00' or ssn[3:5] == '000' or
+        ssn[5:] == '0000' or ssn[5:] == '9999' or
+        ssn == ssn[0] * 9 or int(ssn) in range(123456789, 9876543221)):
+        return False
+    return True
+
 # Ejemplo de uso
 original_name = "Amanda"
 name_variants = read_name_variants('files/name_variant_hackathon.txt')
