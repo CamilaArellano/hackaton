@@ -28,7 +28,7 @@ print(probability_same)
 # for subcases_same in probability_same:
 #     subcase_same(seed)
 
-def subcase_same(header):
+def subcase_same_columns(header):
     columns = []
     for index, attribute in enumerate(header):
         if attribute == 'FirstName':
