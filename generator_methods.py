@@ -4,7 +4,7 @@ import spacy
 from fuzzywuzzy import fuzz
 from uszipcode import SearchEngine
 from faker import Faker
-from read_xlsx import read_row
+from read_xlsx import read_column
 
 # Fake
 fake = Faker()
@@ -67,36 +67,74 @@ def generate_DOB():
     return DOB
 
 # Generación de Apellido
-def find_similar_last_names(target_name, last_names, similarity_threshold):
-    target_name = normalize_name(target_name)
-    similar_names = []
-    target_doc = nlp(target_name)
-    for name in last_names:
-        name = normalize_name(name)
-        name_doc = nlp(name)
-        similarity = target_doc.similarity(name_doc)
-        if similarity >= similarity_threshold:
-            similar_names.append(name)
-    return similar_names
-
-def generate_last_name(similar_names):
-    if not similar_names:
-        return None  # Return None if the list is empty
+def generate_last_name(similar_names, original_last_name, similarity_threshold):
+    while not similar_names:
+        random_last_name = generate_random_last_name()  # Generate a new random name each time
+        similar_names = find_similar_names(random_last_name, last_names, similarity_threshold, similarity_threshold)
     last_name = random.choice(similar_names)
     return last_name
 
+def generate_random_last_name():
+    return fake.last_name()
+
+def mutate_last_name(original_last_name):
+    vowels = "aeiou"
+    consonants = "bcdfghjklmnpqrstvwxyz"
+    mutated_last_name = list(original_last_name.lower())
+    
+    # Probabilidad inicial de mutación
+    mutation_probability = 0.2
+    
+    # Iterar sobre cada letra en el apellido original
+    for i in range(len(mutated_last_name)):
+        # Si la letra actual es una vocal, hay una probabilidad de mutación
+        if mutated_last_name[i] in vowels:
+            if random.random() < mutation_probability:
+                # Agregar una consonante aleatoria después de la vocal
+                mutated_last_name.insert(i + 1, random.choice(consonants))
+                # Aumentar la probabilidad de mutación para la próxima iteración
+                mutation_probability += 0.1
+        # Si la letra actual es una consonante, hay una probabilidad de mutación
+        elif mutated_last_name[i] in consonants:
+            if random.random() < mutation_probability:
+                # Agregar una vocal aleatoria después de la consonante
+                mutated_last_name.insert(i + 1, random.choice(vowels))
+                # Aumentar la probabilidad de mutación para la próxima iteración
+                mutation_probability += 0.1
+    
+    # Convertir la lista de letras mutadas de nuevo a una cadena y capitalizar la primera letra
+    mutated_last_name = "".join(mutated_last_name).capitalize()
+    
+    return mutated_last_name
+
 # Generar un nombre
 original_name = "Susan"
-name_variants = read_name_variants(file_name)
-similar_names = find_similar_names(original_name, name_variants, 1, 90)
+name_variants = read_name_variants('files/name_variant_hackathon.txt')
+similar_names = find_similar_names(original_name, name_variants, 90, 90)
+if original_name in similar_names:
+    similar_names.remove(original_name)
 name = generate_name(similar_names)
-print("Nombre generado:", name)
+print("Nombres similares: ", similar_names)
+print("Nombre generado: ", name)
 
 # Generar un apellido
-original_last_name = "Brill"
-last_names = read_row(file_last_name,1)
-similar_last_names = find_similar_last_names(original_last_name,last_names, 0.7 )
-last_name = generate_last_name(similar_last_names)
+original_last_name = "Adams"
+last_names = read_column(file_last_name, 1)
+similar_last_names = find_similar_names(original_last_name, last_names, 70, 80)
+
+# Excluir el apellido original de la lista similar_last_names
+if original_last_name in similar_last_names:
+    similar_last_names.remove(original_last_name)
+
+# Agregar el apellido mutado a la lista
+mutated_last_name = mutate_last_name(original_last_name)
+similar_last_names.append(mutated_last_name)
+
+print(similar_last_names)
+
+# Generar un apellido
+last_name = generate_last_name(similar_last_names, original_last_name, 0.6)
+print("Apellido original:", original_last_name)
 print("Apellido generado:", last_name)
 
 # Generar un SSN válido

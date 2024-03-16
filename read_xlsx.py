@@ -19,10 +19,10 @@ def fetch_data(file_path):
     data.pop()   # Remove the last row (assuming it's empty)
     return data
 
-def read_row(file_path, row_number=1):
+def read_column(file_path, column_number=1):
     df = pd.read_excel(file_path)
-    selected_row = df.iloc[row_number -1]
-    return selected_row
+    selected_column = df.iloc[:, column_number - 1]  # Selecciona la columna deseada (ten en cuenta que los índices de columna comienzan desde 0)
+    return selected_column
 
 # Print the data
 file_path = 'files/Hackathon-Information.xlsx'
