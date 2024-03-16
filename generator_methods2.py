@@ -1,20 +1,17 @@
+
+# @Camila
+# @Sylvana
+
 import re
 import random
-import spacy
-import phonenumbers
-from phonenumbers import geocoder, PhoneNumberFormat
+import spacy # se instala
 from fuzzywuzzy import fuzz
 from uszipcode import SearchEngine
-import requests
 from faker import Faker
-<<<<<<< HEAD
 
-from seedsData import getSeedsData
+from read_xlsx import read_column
 import csv
 import pandas as pd
-=======
-from read_xlsx import read_column
->>>>>>> parent of 8a850cd (Optimizacion Repositorio)
 
 # Fake
 fake = Faker()
@@ -37,9 +34,6 @@ def read_name_variants(file):
 
 def normalize_name(name):
     return re.sub(r'[^a-zA-Z ]', '', name.lower())
-
-
-    
 
 def find_similar_names(name, registration, levenshtein_threshold, phonetic_threshold):
     similar_names = []
@@ -120,8 +114,6 @@ def mutate_last_name(original_last_name):
     
     return mutated_last_name
 
-
-#!Ejemplos de uso
 # Generar un nombre
 original_name = "Susan"
 name_variants = read_name_variants('files/name_variant_hackathon.txt')
@@ -134,7 +126,7 @@ print("Nombre generado: ", name)
 
 # Generar un apellido
 original_last_name = "Adams"
-last_names = getSeedsData.read_column(file_last_name, 1)
+last_names = read_column(file_last_name, 1)
 similar_last_names = find_similar_names(original_last_name, last_names, 70, 80)
 
 # Excluir el apellido original de la lista similar_last_names
@@ -160,12 +152,11 @@ print("SSN generado:", ssn)
 dob = generate_DOB()
 print("Fecha de nacimiento generada:", dob)
 
-<<<<<<< HEAD
 # *************** generate_zip_code los genera
 
 def generate_random_state_city():
     # Cargar el archivo CSV que contiene los códigos de área y la información de las ciudades y estados
-    area_codes_df = pd.read_csv('files/area_codes.csv')  # Reemplaza 'area_codes.csv' con el nombre real de tu archivo CSV
+    area_codes_df = pd.read_csv('area_codes.csv')  # Reemplaza 'area_codes.csv' con el nombre real de tu archivo CSV
 
     # Seleccionar aleatoriamente una entrada del DataFrame
     random_entry = area_codes_df.sample()
@@ -177,9 +168,16 @@ def generate_random_state_city():
 
     return primary_state, primary_city, primary_code
 
+
 def generate_fake_address():
     address_line_1 = f"{random.randint(1000, 9999)} {random.choice(['Main', 'Oak', 'Pine', 'Maple'])} St"
-    address_line_2 = ""
+    
+    # Determine if address_line_2 will contain the apartment number or remain empty
+    if random.random() < 0.5:  # Adjust probability as needed
+        address_line_2 = f"Apt {random.randint(1, 20)}{random.choice(['', 'A', 'B', 'C'])}"  # Example: Apt 5B
+    else:
+        address_line_2 = ""
+    
     zip4 = f"{random.randint(1000, 9999)}"
     return address_line_1, address_line_2, zip4
 
@@ -233,5 +231,3 @@ print("Dirección 1:", address_line_1)
 print("Dirección 2:", address_line_2)
 print("zip 4:", zip4)
 print("Número de teléfono:", phone)
-=======
->>>>>>> parent of 8a850cd (Optimizacion Repositorio)

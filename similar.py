@@ -1,6 +1,6 @@
-from seedsData.getSeedsData import data, get_row
-from generator_methods_copy import read_name_variants, find_similar_names, generate_name, generate_fake_address
-import Configurations.getJsonData as js
+from getSeedsData import data, get_row
+from generator_methods2 import read_name_variants, find_similar_names, generate_name, generate_fake_address
+import getJsonData as js
 
 ruta='files/config_file.json'
 
@@ -16,7 +16,7 @@ percentageSame = similar[3]
 percentageTypo = similar[5]
 
 
-file_path = 'files/Hackathon-Information.xlsx'
+file_path = 'Hackathon-Information.xlsx'
 generated_data = data(file_path)
 seed = get_row(generated_data, 2)
 header = get_row(generated_data, 0)
@@ -72,23 +72,16 @@ def subcase_same_columns(header):
     return columns
 
 def modify_same(seed, columns):
+    address = generate_fake_address()
     for column_index in columns:
         if header[column_index] == 'Address-1 Line 1':
-            generate_fake_address()
-
-def modify_typo(seed, columns:)
-    for column_index in columns:
-        if header[column_index] == 'FirstName':
-            # Modificar el valor de 'FirstName'
-            name_variants = read_name_variants('files/name_variant_hackathon.txt')
-            similar_names = find_similar_names(seed[column_index], name_variants, 90, 90)
-            if seed[column_index] in similar_names:
-                similar_names.remove(seed[column_index])
-            name = generate_name(similar_names)
+            seed[column_index] = address[0]
+    print(seed)
+            
 
 
-columnas = subcase_same(header)
-print("Columnas: ", subcase_same(header))
+columnas = subcase_same_columns(header)
+print("Columnas: ", subcase_same_columns(header))
 modify_same(seed, columnas )
 
 

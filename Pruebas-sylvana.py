@@ -75,6 +75,10 @@ def generate_zip_code():
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 8a850cd (Optimizacion Repositorio)
 # Ejemplo de uso
 zip_code, state, city, area_code, zip_ad1, zip_ad2, zip_zip4, number = generate_zip_code()
 location_instance = Location(zip_code, state, city, area_code, zip_ad1, zip_ad2, zip_zip4, number)
@@ -87,5 +91,8 @@ print("Dirección 1:", location_instance.address_line_1)
 print("Dirección 2:", location_instance.address_line_2)
 print("zip 4:", location_instance.zip4)
 print("Número de teléfono:", location_instance.phone)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 8a850cd (Optimizacion Repositorio)
